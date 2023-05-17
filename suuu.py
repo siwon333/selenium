@@ -3,6 +3,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import time
 import matplotlib.pyplot as plt
+import requests
+from bs4 import BeautifulSoup
+
+path = (r".\chromedriver.exe")
+driver = webdriver.Chrome(path)
 
 def remove_duplicates(lst):
     return list(set(lst))
@@ -13,50 +18,48 @@ names = []
 tags=[]
 years=[] 
 y=[]
+links = []
+
 query_txt = "디지털" #input("검색 단어 입력 : ") # 검색창에 검색할 단어 입력
 
-path = (r".\chromedriver.exe")
-driver = webdriver.Chrome(path)
-
-driver.get(r"https://search.kyobobook.co.kr/search?keyword=%EB%94%94%EC%A7%80%ED%84%B8&target=total&gbCode=TOT&ra=qntt&len=100") # 드라이버가 제어할 사이트
+url = "https://search.kyobobook.co.kr/search?keyword=" + query_txt + "&target=total&gbCode=TOT&ra=qntt&len=100"
+keyword = "S000"
+driver.get(url) # 드라이버가 제어할 사이트
 time.sleep(1) #1초 대기 -> 사이트가 다 로딩 되기 전에 뒤에 명령어가 실행되면 X
 
-time.sleep(3) #3초 대기
-links=[] #순회할 리스트
-link_list = driver.find_elements_by_class_name("prod_info")
-for i in  link_list:
-    href = i.get_attribute('href')
-    links.append(href)
-linkss=remove_duplicates(links)
-n=len(linkss)
-print("링크수집완료")
 
-for link in linkss:
-    tags=[]
-    year=[]
-    time.sleep(1)
-    driver.get(link)
-    book_name = driver.find_elements_by_css_selector("div.prod_title_box > div.auto_overflow_contents > div > h1 > span")
-    name = book_name[0].text if len(book_name) > 0 else "책 제목 없음"
 
-    book_time = driver.find_elements_by_xpath('//*[@id="scrollSpyProdInfo"]/div[13]/div[2]/table/tbody/tr[2]/td')
-    for i in book_time:
-        year = i.text.split()[1]
+# time.sleep(3) #3초 대기
+# links=[] #순회할 리스트
+# link_list = driver.find_elements_by_class_name("prod_info")
+# for i in  link_list:
+#     href = i.get_attribute('href')
+#     links.append(href)
+# linkss=remove_duplicates(links)
+# n=len(linkss)
+# print("링크수집완료")
 
-    book_cate = driver.find_elements_by_css_selector('.intro_book ul li a:nth-child(3)')
+# for link in linkss:
+#     tags=[] #초기화
+#     year=[] #초기화
+#     time.sleep(3)
+#     driver.get(link)
+#     book_name = driver.find_elements_by_class_name('prod_title')
+#     name = book_name[0].text if len(book_name) > 0 else "책 제목 없음"
+#     print(name)
 
-    for j in range(n):
-        answer = [year, book_cate]
-        years.append(year)
-        tags.append(book_cate)
-        print(answer)
+    # book_time = driver.find_elements_by_xpath('//*[@id="scrollSpyProdInfo"]/div[13]/div[2]/table/tbody/tr[2]/td')
+    # for i in book_time:
+    #     year = i.text.split()[1]
 
+    # book_cate = driver.find_elements_by_css_selector('.intro_book ul li a:nth-child(3)')
+
+    # for j in range(n):
+    #     answer = [year, book_cate]
+    #     years.append(year)
+    #     tags.append(book_cate)
+    #     print(answer)
     
-
-
-
-
-
 # years = []  # 빈 리스트 생성
 # category = []
 # for link in links:
@@ -86,7 +89,6 @@ for link in linkss:
 #         tags.append(title) #title을 리스트에 저장
 #         result = list(set(tags)) #반복되는 문자열 삭제
         
-    
 
 #     if len(years) == nn:
 #         break
@@ -101,15 +103,12 @@ driver.quit()
 #     book_name = driver.find_element_by_class_name('prod_title')
 #     print(book_name.text)
         
-
 # book_time = driver.find_elements_by_xpath('//span[@class="date"]') #출간일자를 수집할 변수
 
 # for i in book_time:
 #     year = i.text.split()[0]  # Split the text and get the year part
 #     if year in ['2017년', '2018년', '2019년', '2020년', '2021년', '2022년']:
 #         years.append(year)
-
-
 
 # book_time = driver.find_elements_by_xpath('//span[@class="date"]') #출간일자를 수집할 변수
 
