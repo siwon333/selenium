@@ -1,0 +1,157 @@
+from selenium import webdriver 
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+import time
+import matplotlib.pyplot as plt
+
+tags=[] 
+years=[]
+y=[]
+seven=[]
+eight=[]
+nine=[]
+zero=[]
+one=[]
+two=[]
+
+query_txt = "디지털" # 검색창에 검색할 단어 입력
+
+path = (r"C:\Users\siwon\OneDrive\바탕 화면\크롤링\chromedriver.exe")
+driver = webdriver.Chrome(path)
+
+driver.get(r"https://search.kyobobook.co.kr/search?keyword="+query_txt+"&target=total&gbCode=TOT&ra=qntt&len=100") # 드라이버가 제어할 사이트
+time.sleep(1) #1초 대기 -> 사이트가 다 로딩 되기 전에 뒤에 명령어가 실행되면 X
+
+time.sleep(3) #3초 대기
+
+book_tag = driver.find_elements_by_css_selector(".tag") #키워드 추출, 변수에 저장
+# no = len(book_tag) #키워드 개수 세기
+# if no == 0 : #만약 키워드가 없다면
+#     print("검색결과가 없습니다.") #출력
+# else: #키워드가 1개 이상 있다면
+#     print("키워드 수 : ",no,"개") #키워드 개수 출력
+#     for i in book_tag: #반복문 / 키워드 수만큼 반복
+#         title = i.text # 추출한 키워드를 title에 저장
+#         print(title)
+#         tags.append(title) #title을 리스트에 저장
+
+# result = list(set(tags)) #반복되는 문자열 삭제
+
+# print("검색어 : ",query_txt) #검색어 출력
+# print(result, len(result), "개") #추출 키워드 출력, 키워드 개수 출력
+
+book_time = driver.find_elements_by_xpath('//span[@class="date"]') #출간일자를 수집할 변수
+
+for i in book_time:
+    year = i.text.split()[0]  #출간년도를 리스트에 저장
+    if year == '2022년':
+        for i in book_tag: #반복문 / 키워드 수만큼 반복
+            title = i.text # 추출한 키워드를 title에 저장
+            #print(title)
+            two.append(title) #title을 리스트에 저장
+            years.append(year)
+            print("2022",two)
+    elif year == '2021년':
+        for i in book_tag: #반복문 / 키워드 수만큼 반복
+            title = i.text # 추출한 키워드를 title에 저장
+            #print(title)
+            one.append(title) #title을 리스트에 저장
+            years.append(year)
+            print("2021",one)
+    elif year == '2020년':
+        for i in book_tag: #반복문 / 키워드 수만큼 반복
+            title = i.text # 추출한 키워드를 title에 저장
+            #print(title)
+            zero.append(title) #title을 리스트에 저장
+            years.append(year)
+            print("2020",zero)
+    elif year == '2019년':
+        for i in book_tag: #반복문 / 키워드 수만큼 반복
+            title = i.text # 추출한 키워드를 title에 저장
+            #print(title)
+            nine.append(title) #title을 리스트에 저장
+            years.append(year)   
+            print("2019",nine) 
+    elif year == '2018년':
+        for i in book_tag: #반복문 / 키워드 수만큼 반복
+            title = i.text # 추출한 키워드를 title에 저장
+            #print(title)
+            eight.append(title) #title을 리스트에 저장
+            years.append(year)
+            print("2018",eight)
+    elif year == '2017년':
+        for i in book_tag: #반복문 / 키워드 수만큼 반복
+            title = i.text # 추출한 키워드를 title에 저장
+            #print(title)
+            seven.append(title) #title을 리스트에 저장
+            years.append(year)
+            print("2017",seven)
+    elif len(years)==100:
+        break
+print(seven,eight,nine,zero,one,two)
+# driver.get(r"https://search.kyobobook.co.kr/search?keyword="+query_txt+"&target=total&gbCode=TOT&page=2&ra=qntt&len=100")
+# book_time = driver.find_elements_by_xpath('//span[@class="date"]')
+
+# for i in book_time:
+#     year = i.text.split()[0]  #출간년도를 리스트에 저장
+#     if year == '2022년':
+#         for i in book_tag: #반복문 / 키워드 수만큼 반복
+#             title = i.text # 추출한 키워드를 title에 저장
+#             print(title)
+#             two.append(title) #title을 리스트에 저장
+#             years.append(year)
+#     elif year == '2021년':
+#         for i in book_tag: #반복문 / 키워드 수만큼 반복
+#             title = i.text # 추출한 키워드를 title에 저장
+#             print(title)
+#             one.append(title) #title을 리스트에 저장
+#             years.append(year)
+#     elif year == '2020년':
+#         for i in book_tag: #반복문 / 키워드 수만큼 반복
+#             title = i.text # 추출한 키워드를 title에 저장
+#             print(title)
+#             zero.append(title) #title을 리스트에 저장
+#             years.append(year)
+#     elif year == '2019년':
+#         for i in book_tag: #반복문 / 키워드 수만큼 반복
+#             title = i.text # 추출한 키워드를 title에 저장
+#             print(title)
+#             nine.append(title) #title을 리스트에 저장
+#             years.append(year)    
+#     elif year == '2018년':
+#         for i in book_tag: #반복문 / 키워드 수만큼 반복
+#             title = i.text # 추출한 키워드를 title에 저장
+#             print(title)
+#             eight.append(title) #title을 리스트에 저장
+#             years.append(year)
+#     elif year == '2017년':
+#         for i in book_tag: #반복문 / 키워드 수만큼 반복
+#             title = i.text # 추출한 키워드를 title에 저장
+#             print(title)
+#             seven.append(title) #title을 리스트에 저장
+#             years.append(year)
+#     if len(years)==100: #값이 100개가 되면 끝내기
+#         break
+
+# print("2017년 : ",years.count("2017년"),"권") #years리스트 안에 2017인 값의 개수
+# print("2018년 : ",years.count("2018년"),"권") #years리스트 안에 2018인 값의 개수
+# print("2019년 : ",years.count("2019년"),"권") #years리스트 안에 2019인 값의 개수
+# print("2020년 : ",years.count("2020년"),"권") #years리스트 안에 2020인 값의 개수
+# print("2021년 : ",years.count("2021년"),"권") #years리스트 안에 2021인 값의 개수
+# print("2022년 : ",years.count("2022년"),"권") #years리스트 안에 2022인 값의 개수
+# print(len(years))
+
+# # 그래프로 표현할 두 데이터 리스트 정의
+# sun = [2017, 2018, 2019, 2020, 2021, 2022]
+# scores = [years.count("2017년"), years.count("2018년"), 
+#           years.count("2019년"), years.count("2020년"), years.count("2021년"), years.count("2022년")]
+
+# plt.plot(sun, scores) # 사용할 데이터 리스트 선언
+
+# # X값과 y값으로 사용할 값 설정
+# plt.xlabel('Year')
+# plt.ylabel('Score')
+
+# plt.grid(True) # 눈금 표시
+
+# plt.show()# 그래프 보여주기
